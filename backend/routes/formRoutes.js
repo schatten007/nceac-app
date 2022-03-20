@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const { postForm } = require('../controllers/formController');
+const { getForm, postForm } = require('../controllers/formController');
+const { printFormData } = require('../controllers/formSubmitController');
 
-// router.get('/', getForm);
+router.get('/', getForm);
+router.get('/print/:id', printFormData);
 router.post('/', postForm);
 // router.put('/:id', putForm);
 // router.delete('/:id', deleteForm);

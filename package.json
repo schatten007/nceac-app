@@ -21,7 +21,9 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.2",
-    "playwright": "^1.19.2"
+    "playwright": "^1.19.2",
+    "puppeteer": "^13.5.1",
+    "xlsx": "^0.18.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

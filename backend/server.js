@@ -25,6 +25,9 @@ app.use('/api/user', require('./routes/userRoutes'));
 // desc     Form Route
 app.use('/api/form', require('./routes/formRoutes'));
 
+// desc     Form Data Upload Route
+app.use('/api/form/data', require('./routes/formDataRoutes'));
+
 // @desc    ErrorHandlers
 app.use(errorHandler);
 

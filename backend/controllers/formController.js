@@ -9,8 +9,8 @@ const Form = require('../models/formModel');
 // @route   GET /api/form
 // @access  Private
 const getForm = asyncHandler(async (req, res) => {
-    // const names = await Test.find({ user: req.user.id });
-    // res.status(200).json(names);
+    const forms = await Form.find({});
+    res.status(200).json(forms);
 })
 
 
@@ -65,10 +65,13 @@ const postForm = asyncHandler(async (req, res) => {
     console.log(inputs);
 
     // Clone form to DB HERE
-    // const form = await Form.create({
-    //     url: req.body.name,
-    //     user: req.user.id
-    // });
+    const form = await Form.create({
+        name: req.body.name,
+        url: req.body.url,
+        inputs: inputs
+    });
+    console.log('Saved Form');
+
 
     res.status(200).json({
         message: 'Got ze form',
