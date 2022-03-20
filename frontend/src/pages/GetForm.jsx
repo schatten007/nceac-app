@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar'
 import { Container } from '../components/styled/Container'
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, TextField, Grid, Typography, Box } from '@mui/material';
 import formApi from '../api/form';
 
 function GetForm() {
@@ -24,6 +24,7 @@ function GetForm() {
        
         console.log(response);
         setInputs(response.data.inputs);
+        alert('Form Loaded');
       } catch(error) {
         console.log(error); 
       }
@@ -33,16 +34,29 @@ function GetForm() {
   return (
     <Container>
         <Sidebar />
+        <Box sx={{m: 8, width: '75%'}}>
         <form>
-          {/* <input type="text" onChange={(e)=> {setUrl(e.target.value)}} value={url}></input> */}
-          <TextField id="outlined-basic" onChange={(e)=> {setUrl(e.target.value)}} value={url} label="Enter URL" variant="outlined" />
-          <TextField id="outlined-basic" onChange={(e)=> {setFormName(e.target.value)}} value={formName} label="Enter Form Name" variant="outlined" />
-          <Button variant="contained" onClick={submitHandler}>Submit</Button>
+          <Grid container spacing={5}>
+            <Grid item xs={12}>  
+              <Typography align="center" variant="h3">Duplicate Form</Typography>
+            </Grid>
+            <Grid item xs={12}>  
+              <TextField sx={{width: '50%'}} id="outlined-basic" onChange={(e)=> {setUrl(e.target.value)}} value={url} label="Enter URL" variant="outlined" />
+            </Grid>
+            <Grid item xs={12}>    
+              <TextField sx={{width: '50%'}} id="outlined-basic" onChange={(e)=> {setFormName(e.target.value)}} value={formName} label="Enter Form Name" variant="outlined" />
+            </Grid>  
+            <Grid item xs={12}>
+              <Button sx={{width: '20%'}} variant="contained" onClick={submitHandler}>Submit</Button>
+            </Grid>
+          </Grid>
         </form>
-        {
+        </Box>
+        {/* {
           inputs.length >= 0 && 
           <Typography>Form Loaded</Typography>
-        }
+        } */}
+
     </Container>
   )
 }

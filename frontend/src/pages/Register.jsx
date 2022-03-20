@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import userApi from '../api/user';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -32,6 +33,8 @@ const theme = createTheme();
 
 function Register() {
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -44,8 +47,10 @@ function Register() {
     const response = await userApi.post('/', reqData);
 
     console.log(response);
+    alert('Registration Successful');
 
     // Redirect Code Here
+    navigate('/login');
   };
 
   return (

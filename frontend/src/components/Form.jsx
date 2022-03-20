@@ -1,10 +1,13 @@
 import React from 'react'
-import Button from '@mui/material/Button';
 import { useState } from 'react';
 import formData from '../api/formData';
 import form from '../api/form';
 import { useNavigate } from 'react-router-dom';
 import exportFromJSON from 'export-from-json'  
+import { decodeToken } from "react-jwt";
+import { Button, TextField, Grid, Typography, Box } from '@mui/material';
+
+
 // import styled from 'styled-components';
 
 function Form({inputs, formID}) {
@@ -12,11 +15,20 @@ function Form({inputs, formID}) {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem('token');
+    if(!token){
+        navigate('/login');      
+    }
+
+    const userId = decodeToken(token).id;
+    console.log(userId);
+    
+
     try{
       const reqData = {
         id: formID,
         values: values,
-        createdBy: '6217f1c0ad585745944354c4' //Test User ID
+        createdBy: userId //Test User ID
       }
       
       const response = await formData.post('/', reqData);

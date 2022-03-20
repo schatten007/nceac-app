@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { decodeToken } from "react-jwt";
 import { useNavigate } from 'react-router-dom';
 import userApi from '../api/user';
-
+import { Box, Typography } from '@mui/material';
 
 function Dashboard() {
   
@@ -30,14 +30,16 @@ function Dashboard() {
     }
 
     authUser();
-  }, []);
+  }, [ navigate ]);
 
   return (
     <Container>
         <Sidebar />
+        <Box sx={{m: 8}}>
         {
-          (currentUser) ? <h1>Welcome {currentUser}</h1> : <h1>Dashboard</h1>  
+          (currentUser) ? <Typography variant="h2">Welcome {currentUser}</Typography> : <Typography variant="h2">Dashboard, User not found</Typography>  
         }
+        </Box>
     </Container>
   )
 }

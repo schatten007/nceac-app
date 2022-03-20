@@ -85,6 +85,10 @@ h3 {
   color: #828282;
 }
 
+.pro-sidebar {
+  height: 100vh !important;
+}
+
 /* .btn {
   padding: 10px 20px;
   border: 1px solid #000;
