@@ -12,6 +12,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import userApi from '../api/user';
+import { isExpired, decodeToken } from "react-jwt";
+import { useNavigate } from 'react-router-dom';
+
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,15 +34,31 @@ const theme = createTheme();
 
 
 function Login() {
+  const navigate = useNavigate();
 
-  
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const reqData = ({
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    const response = await userApi.post('/login', reqData);
+    
+    console.log(response);
+    
+    const myDecodedToken = decodeToken(response.data.token);
+    
+    console.log(myDecodedToken);
+
+    if(myDecodedToken.id){
+      localStorage.setItem('token', response.data.token);
+      alert('Login Successful');
+      navigate('/');
+    }else{
+      alert('Login Failed');
+    }
   };
 
 

@@ -47,7 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('Invalid User Data');
     }
 
-    res.status(200).json({ message: 'Register User ' });
+    res.status(200).json({ message: 'Register User ', email, name, password });
 })
 
 
@@ -86,7 +86,8 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/user/me
 // @access  Private 
 const getMe = asyncHandler(async (req, res) => {
-    const { _id, name, email } = await User.findById(req.user.id);
+    const { _id, name, email } = await User.findById(req.body.id);
+    // const { _id, name, email } = await User.findById(req.user.id);
 
     res.status(200).json({
         id: _id,
