@@ -22,10 +22,10 @@ app.use('/api/test', require('./routes/test'));
 // @desc    Users Route
 app.use('/api/user', require('./routes/userRoutes'));
 
-// desc     Form Route
+// @desc     Form Route
 app.use('/api/form', require('./routes/formRoutes'));
 
-// desc     Form Data Upload Route
+// @desc     Form Data Upload Route
 app.use('/api/form/data', require('./routes/formDataRoutes'));
 
 // @desc    ErrorHandlers

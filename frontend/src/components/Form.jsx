@@ -5,7 +5,7 @@ import form from '../api/form';
 import { useNavigate } from 'react-router-dom';
 import exportFromJSON from 'export-from-json'  
 import { decodeToken } from "react-jwt";
-import { Button, TextField, Grid, Typography, Box } from '@mui/material';
+import { Button,  Grid, Typography, Box } from '@mui/material';
 
 
 // import styled from 'styled-components';
@@ -67,28 +67,38 @@ function Form({inputs, formID}) {
 
 
   return (
+    <Box>
+    <Typography variant="h4" sx={{mb: 2}}>Form</Typography>
     <form>
-        {
+        <Grid container spacing={2}>
+        {  
             inputs.map(input => {
                 console.log(input);
                 return(
-                    <>
-                    {input.name && (input.type !== "hidden") && (input.type!== "submit") && (input.type!=="button") && <label for={input.id}>{input.name}</label>}
+                    <Grid item xs={12}>
+                    {input.name && (input.type !== "hidden") && (input.type!== "submit") && (input.type!=="button") && <Grid item xs={6}><label for={input.id}>{input.name}</label></Grid>}
                     {
                     (input.type.toString() === "button" || input.type.toString() === "submit") ?
-                    <Button variant="contained">{input.name}</Button>
+                    console.log(<Grid item xs={6}><Button variant="contained">{input.name}</Button></Grid>)
                     : 
-                    <input onChange={handleChange} name={input.name} type={input.type} id={(input.id !== "undefined") ? input.id : ""} placeholder={input.placeholder} value={values.name}></input>
+                    <Grid item xs={6}><input onChange={handleChange} name={input.name} type={input.type} id={(input.id !== "undefined") ? input.id : ""} placeholder={input.placeholder} value={values.name}></input></Grid>
                     }
-                    <br />
-                    </>
+                    </Grid>
                 )
             })
         }
-        <Button variant="contained" color="success" onClick={handleSubmit}>Submit</Button>
-        <Button variant="contained" color="warning" onClick={() => navigate(`/form/data/${formID}`)}>View</Button>
-        <Button variant="contained" color="error" onClick={handleSourceSubmit}>Export to Excel</Button>
+        <Grid item xs={12}>
+          <Button variant="contained" color="success" onClick={handleSubmit}>Submit</Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="warning" onClick={() => navigate(`/form/data/${formID}`)}>View</Button>    
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="error" onClick={handleSourceSubmit}>Export to Excel</Button>
+        </Grid>
+        </Grid>
     </form>
+    </Box>
   );
 }
 

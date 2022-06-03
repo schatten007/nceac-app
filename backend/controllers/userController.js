@@ -44,7 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
         });
     } else {
         res.status(400);
-        throw new Error('Invalid User Data');
+        throw new Error('Oops, something went wrong. Couldnt create new User');
     }
 
     res.status(200).json({ message: 'Register User ', email, name, password });

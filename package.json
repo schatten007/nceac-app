@@ -23,6 +23,7 @@
     "mongoose": "^6.2.2",
     "playwright": "^1.19.2",
     "puppeteer": "^13.5.1",
+    "react-promise-tracker": "^2.1.0",
     "xlsx": "^0.18.4"
   },
   "devDependencies": {

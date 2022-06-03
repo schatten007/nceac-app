@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
@@ -16,13 +16,18 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 function App() {
+  // @modified in Dashboard
+  const [ currentUser, setCurrentUser ] = useState();
+
+
+
   return (
     <>
       <Router>
         <div className="container">
-          <Header />
+          <Header currentUser={currentUser} setCurrentUser={setCurrentUser}/>
           <Routes>
-            <Route path='/' element={<Dashboard />} />
+            <Route path='/' element={<Dashboard  currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/form/get' element={<GetForm />} />
