@@ -2,15 +2,15 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
-
+const subject = require('../models/subjectModel');
 
 // @desc    Resgister New User
 // @route   POST /api/user
 // @access  Public 
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
-    if (!email || !name || !password) {
+    if (!email || !name || !password || !role) {
         res.status(400);
         throw new Error('Please add all fields');
     }
@@ -31,7 +31,8 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = await User.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        role
     });
 
     if (user) {
@@ -47,7 +48,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('Oops, something went wrong. Couldnt create new User');
     }
 
-    res.status(200).json({ message: 'Register User ', email, name, password });
+    res.status(200).json({ message: 'Register User ', email, name, password, role });
 })
 
 
@@ -86,13 +87,95 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/user/me
 // @access  Private 
 const getMe = asyncHandler(async (req, res) => {
-    const { _id, name, email } = await User.findById(req.body.id);
+    const { _id, name, email, role } = await User.findById(req.body.id);
     // const { _id, name, email } = await User.findById(req.user.id);
+
+    const userSubject = await subject.find({assignedTo: _id});
 
     res.status(200).json({
         id: _id,
         name,
-        email
+        email,
+        userSubject,
+        role
+    });
+})
+
+const getUserList = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { role } = await User.findById(id);
+
+    if(role!=='admin'){
+        res.status(400);
+        throw new Error('Access Denied');
+    }
+
+    const userList = await User.find({})
+    // const userSubject = await subject.find({assignedTo: _id});
+
+    res.status(200).json({
+        userList
+    });
+})
+
+const modifyUser = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const { role } = await User.findById(id);
+
+    if(role!=='admin'){
+        res.status(400);
+        throw new Error('Access Denied');
+    }
+
+    const user = await User.findById(userId);
+    const userRole = user.role;
+
+    if(!userRole){
+        res.status(400);
+        throw new Error('No User Role Found');
+    }
+    if(id === userId){
+        res.status(400);
+        throw new Error('Sike, you thought');
+    }
+
+    let newRole = 'user';
+    if(userRole==='user'){
+        newRole = 'admin'
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, {$set: { role: newRole}})
+    // const userSubject = await subject.find({assignedTo: _id});
+
+    res.status(200).json({
+        updatedUser
+    });
+})
+
+const deleteUser = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { userId } = req.params;
+    const { role } = await User.findById(id);
+
+    if(role!=='admin'){
+        res.status(400);
+        throw new Error('Access Denied');
+    }
+
+    if(id === userId){
+        res.status(400);
+        throw new Error('Sike, you thought');
+    }
+
+    console.log(`User ID ${userId}`)
+    const deletedUser = await User.findByIdAndRemove(userId);
+    // const userSubject = await subject.find({assignedTo: _id});
+
+    console.log('Deleted User', deletedUser);
+
+    res.status(200).json({
+        deletedUser
     });
 })
 
@@ -105,5 +188,8 @@ const generateJWT = (id) => {
 module.exports = {
     registerUser,
     loginUser,
-    getMe
+    getMe,
+    getUserList,
+    modifyUser,
+    deleteUser
 }

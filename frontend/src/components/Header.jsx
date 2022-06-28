@@ -2,6 +2,7 @@ import React from 'react'
 import { FaUser } from 'react-icons/fa';
 import { GoSignIn, GoSignOut } from 'react-icons/go';
 import { Link } from 'react-router-dom';
+import styled from '@emotion/styled'
 
 function Header({ currentUser, setCurrentUser }) {
 
@@ -11,7 +12,7 @@ function Header({ currentUser, setCurrentUser }) {
     }
 
     return (
-        <header className='header'>
+        <StyledHeader className='header'>
             <div className="logo">
                 <Link to='/'>DEV BUILD</Link>
             </div>
@@ -38,8 +39,15 @@ function Header({ currentUser, setCurrentUser }) {
                     }
                 </li>
             </ul>
-        </header>
+        </StyledHeader>
     );
 }
+
+const StyledHeader = styled.header`
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 999;
+    position: relative;
+
+`
 
 export default Header

@@ -1,8 +1,14 @@
 import React from 'react'
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import 'react-pro-sidebar/dist/css/styles.css';
 import { FaGem, FaUser, FaWpforms } from 'react-icons/fa'
+import { AiFillFolderOpen } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+
+
+
+// import 'react-pro-sidebar/dist/css/styles.css';
+import '../Styles/SidebarOverride.scss'
+
 
 
 function Sidebar() {
@@ -18,6 +24,9 @@ function Sidebar() {
                 </MenuItem>
                 <MenuItem>Login
                     <Link to="/login" />
+                </MenuItem>
+                <MenuItem>Subject
+                    <Link to="/subject" icon={<AiFillFolderOpen />} />
                 </MenuItem>
             </SubMenu>
             <SubMenu title="Form" icon={<FaWpforms />}>

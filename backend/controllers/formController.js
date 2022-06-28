@@ -36,6 +36,7 @@ const postForm = asyncHandler(async (req, res) => {
         const name = $(this).attr("name");
         const id = $(this).attr("id");
         const type = $(this).attr("type");
+        if(type==='hidden') return;
         const placeholder = $(this).attr("placeholder");
 
         // Assigns value if defined else assigns string undefined
@@ -82,35 +83,24 @@ const postForm = asyncHandler(async (req, res) => {
 
 
 // @desc    Form Route
-// @route   PUT /api/form/:id
+// @route   PATCH /api/form/:id
 // // @access  Private
-const putForm = asyncHandler(async (req, res) => {
-    // const test = await Test.findById(req.params.id);
+const patchForm = asyncHandler(async (req, res) => {
+    const { updatedInputs } = req.body;
 
-    // if (!test) {
-    //     res.status(400);
-    //     throw Error('No test found. Recheck ID');
-    // }
+    const form = await Form.findById(req.params.id);
 
-    // const user = await User.findById(req.user.id);
+    if (!form) {
+        res.status(400);
+        throw Error('No Form found. Recheck ID');
+    }
 
-    // // Check user exists
-    // if (!user) {
-    //     res.status(401);
-    //     throw new Error('User not found')
-    // }
 
-    // // Check if test user is same as token user
-    // if (test.user.toString() != user.id) {
-    //     res.status(401);
-    //     throw new Error('User not authorized');
-    // }
+    const newForm = await Form.findByIdAndUpdate(req.params.id, { $set: { inputs: updatedInputs }}, {
+        new: true
+    });
 
-    // const newTest = await Test.findByIdAndUpdate(req.params.id, req.body, {
-    //     new: true
-    // });
-
-    // res.json(newTest);
+    res.json(newForm);
 }
 )
 
@@ -118,12 +108,12 @@ const putForm = asyncHandler(async (req, res) => {
 // // @route   DELETE /api/form/:id
 // // @access  Private
 const deleteForm = asyncHandler(async (req, res) => {
-    // const test = Test.findById(req.params.id);
+    const form = Form.findById(req.params.id);
 
-    // if (!test) {
-    //     res.status(400);
-    //     throw Error('No test found. Recheck ID');
-    // }
+    if (!form) {
+        res.status(400);
+        throw Error('No form found. Recheck ID');
+    }
 
 
     // const user = await User.findById(req.user.id);
@@ -140,13 +130,13 @@ const deleteForm = asyncHandler(async (req, res) => {
     //     throw new Error('User not authorized');
     // }
 
-    // await Test.findByIdAndDelete(req.params.id);
-    // res.json(({ message: `Deleting data with id ${req.params.id}` }))
+    await Form.findByIdAndDelete(req.params.id);
+    res.json(({ message: `Deleting Form with id ${req.params.id}` }))
 })
 
 module.exports = {
     getForm,
     postForm,
-    putForm,
+    patchForm,
     deleteForm
 }

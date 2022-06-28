@@ -16,9 +16,14 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.26.0",
+    "bootstrap": "^5.1.3",
     "export-from-json": "^1.5.2",
     "file-saver": "^2.0.5",
+    "firebase": "^9.8.2",
+    "mui-datatables": "^4.2.2",
+    "pdf-lib": "^1.17.1",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.4.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-jwt": "^1.1.4",
@@ -27,6 +32,7 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-spinners": "^0.12.0",
+    "recharts": "^2.1.11",
     "styled-components": "^5.3.3",
     "xlsx": "^0.18.4"
   },
@@ -52,6 +58,6 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.49.9"
+    "sass": "^1.53.0"
   }
 }

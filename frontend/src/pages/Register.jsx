@@ -86,7 +86,8 @@ function Register() {
     const reqData = ({
       email: data.get('email'),
       password: data.get('password'),
-      name: data.get('name')
+      name: data.get('name'),
+      role: 'user'
     });
     
 

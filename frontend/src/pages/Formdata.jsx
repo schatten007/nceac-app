@@ -45,51 +45,54 @@ function GetForm() {
   return (
     <Container>
         <Sidebar />
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>#</TableCell>
-                <TableCell>Data</TableCell>
-                <TableCell>Entered By</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {formValues && formValues.map((row, i) => (
-                <TableRow
-                  key={row._id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell>{++i }</TableCell>
-                  <TableCell onClick={() => setSelectedRow(row.data)}><Link color="primary">View Data</Link></TableCell>
-                  <TableCell>{row.createdBy.name}</TableCell>
+        <Box sx={{m:4, width: '100%'}}>
+          <Typography variant='h4' sx={{m: 4}}>Form Data</Typography>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>#</TableCell>
+                  <TableCell>Data</TableCell>
+                  <TableCell>Entered By</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-            
-            <Modal
-                open={(selectedRow !== 'none')}
-                onClose={() => setSelectedRow('none')}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-              <Box sx={style}>
-                {
-                  (selectedRow!=='none') && selectedRow.map( (dataIndex) => {
-                    if(dataIndex.value==='') return <></>;
-                    return(
-                      <div>
-                        <Typography variant="body1" align="left">{dataIndex.name}:</Typography>
-                        <Typography variant="body2" align="right">{dataIndex.value}</Typography>
-                      </div>
-                    )
-                  })
-                }
-              </Box>
-            </Modal>
-            
-          </Table>
-    </TableContainer>
+              </TableHead>
+              <TableBody>
+                {formValues && formValues.map((row, i) => (
+                  <TableRow
+                    key={row._id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell>{++i }</TableCell>
+                    <TableCell onClick={() => setSelectedRow(row.data)}><Link color="primary">View Data</Link></TableCell>
+                    <TableCell>{row.createdBy.name}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              
+              <Modal
+                  open={(selectedRow !== 'none')}
+                  onClose={() => setSelectedRow('none')}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                <Box sx={style}>
+                  {
+                    (selectedRow!=='none') && selectedRow.map( (dataIndex) => {
+                      if(dataIndex.value==='') return <></>;
+                      return(
+                        <div>
+                          <Typography variant="body1" align="left">{dataIndex.name}:</Typography>
+                          <Typography variant="body2" align="right">{dataIndex.value}</Typography>
+                        </div>
+                      )
+                    })
+                  }
+                </Box>
+              </Modal>
+              
+            </Table>
+      </TableContainer>
+    </Box>
     </Container>
   )
 }

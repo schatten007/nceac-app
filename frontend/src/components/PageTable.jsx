@@ -9,7 +9,7 @@ import exportFromJSON from 'export-from-json'
 
 
 
-export default function PageTable({forms, setCurrentForm}) {
+export default function PageTable({forms, setCurrentForm, currentUser}) {
 
   const navigate = useNavigate();
 
@@ -43,23 +43,47 @@ export default function PageTable({forms, setCurrentForm}) {
     }
   }
 
-  const columns = [
-    { field: 'name', headerName: 'Name', width: 150 },
-    { field: 'URL', headerName: 'URL', width: 300, sortable:false },
-    { field: 'createdAt', headerName: 'Creation Date', width: 150 },
-    { field: 'openForm', headerName: 'Open', width: 70, sortable: false, 
-    renderCell: (params) => (
-        <Link onClick={() => handleRowClick(params.formattedValue)}>Open</Link>
-    )},
-    { field: 'viewData', headerName: 'View Entries', width: 120, sortable: false, 
-    renderCell: (params) => (
-        <Link onClick={ () => handleViewClick(params.row.id)} >View</Link>
-    )},
-    { field: 'exportEntries', headerName: 'Export (Excel)', width: 120, sortable: false, 
-    renderCell: (params) => (
-        <Link onClick={ () => handleExportClick(params.row.id)} >Export</Link>
-    )},
-];
+  const handleDeleteClick = async (formId) => {
+    try{
+      const response = await form.delete(`/${formId}`);
+      console.log(response);
+      alert('Form Deleted');
+      window.location.reload();
+
+    } catch(e){
+      console.log(e);
+    }
+  }
+
+    let columns = [
+      { field: 'name', headerName: 'Name', width: 150 },
+      { field: 'URL', headerName: 'URL', width: 300, sortable:false },
+      { field: 'createdAt', headerName: 'Creation Date', width: 150 },
+      { field: 'openForm', headerName: 'Open', width: 70, sortable: false, 
+      renderCell: (params) => (
+          <Link onClick={() => handleRowClick(params.formattedValue)}>Open</Link>
+      )},
+    ];
+
+
+    const adminColumns = [
+      { field: 'viewData', headerName: 'View Entries', width: 120, sortable: false, 
+      renderCell: (params) => (
+          <Link onClick={ () => handleViewClick(params.row.id)} >View</Link>
+      )},
+      { field: 'exportEntries', headerName: 'Export (Excel)', width: 120, sortable: false, 
+      renderCell: (params) => (
+          <Link onClick={ () => handleExportClick(params.row.id)} >Export</Link>
+      )},
+      { field: 'deleteForm', headerName: 'Delete', width: 120, sortable: false, 
+      renderCell: (params) => (
+          <Link onClick={ () => handleDeleteClick(params.row.id)} >Delete</Link>
+      )},
+    ]
+    if(currentUser.role==='admin'){
+      columns = columns.concat(adminColumns);
+    }
+
     console.log(forms);
     const tableRows = [];
     forms.forEach( form => {
@@ -72,7 +96,7 @@ export default function PageTable({forms, setCurrentForm}) {
         })
     });
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400 }}>
       <DataGrid
         rows={tableRows}
         columns={columns}

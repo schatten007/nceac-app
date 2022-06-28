@@ -28,6 +28,26 @@ app.use('/api/form', require('./routes/formRoutes'));
 // @desc     Form Data Upload Route
 app.use('/api/form/data', require('./routes/formDataRoutes'));
 
+// @desc     Subject Data Route
+app.use('/api/subject', require('./routes/subjectRoutes'));
+
+// @desc     Quiz Data Route
+app.use('/api/quiz', require('./routes/quizRoutes'));
+
+// @desc     Assignment Data Route
+app.use('/api/assignment', require('./routes/assignmentRoutes'));
+
+// desc      Mid Data Route
+app.use('/api/mid', require('./routes/midRoutes'));
+
+// desc      Final Data Route
+app.use('/api/final', require('./routes/finalRoutes'));
+
+// desc      Lecture Notes Data Route
+app.use('/api/lecturenotes', require('./routes/noteRoutes'));
+
+
+
 // @desc    ErrorHandlers
 app.use(errorHandler);
 

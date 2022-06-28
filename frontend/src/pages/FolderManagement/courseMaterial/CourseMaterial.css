@@ -1,0 +1,15 @@
+.add_btn {
+  text-align: right;
+}
+
+.child {
+  display: inline-block;
+}
+
+.container {
+  overflow: auto;
+}
+
+.label-font{
+    font-size: 25px;
+ }

@@ -5,7 +5,7 @@ const FormData = require('../models/formDataModel');
 // @route   GET /api/form/data/:id
 // @access  Private
 const getFormData = asyncHandler(async (req, res) => {
-    console.log(req.params)
+    console.log('getFormData', req.params)
     if (!req.params.id) {
         res.status(400);
         throw new Error('Form ID not found in request');
